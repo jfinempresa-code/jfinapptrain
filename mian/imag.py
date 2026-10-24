@@ -44,3 +44,103 @@ def obrir_imatges(parent, titol="Seleccionar imatge"):
             tk.Label(marc, text=str(error), fg="red").pack()
 
     return finestra
+
+import tkinter as tk
+from tkinter import messagebox
+from PIL import Image, ImageTk
+import json
+from pathlib import Path
+
+# Carpeta on es troba aquest fitxer
+CARPETA = Path(__file__).resolve().parent
+FITXER_JSON = CARPETA / "seleccion.json"
+
+# Opcions de selecció
+IMATGES = {
+    "resvio": "resvio.png",
+    "viax": "viax.png",
+    "conva": "conva.png",
+    "conra": "conra.png",
+    "lina": "lina.png",
+}
+
+
+def guardar_seleccio(opcio):
+    """Guarda l'opció seleccionada en format JSON."""
+    dades = {
+        "seleccio": opcio,
+        "imatge": IMATGES[opcio]
+    }
+
+    try:
+        with open(FITXER_JSON, "w", encoding="utf-8") as fitxer:
+            json.dump(dades, fitxer, indent=4, ensure_ascii=False)
+
+        messagebox.showinfo(
+            "Selecció guardada",
+            f"Has seleccionat: {opcio}\n\n"
+            f"Guardat a: {FITXER_JSON.name}"
+        )
+    except OSError as error:
+        messagebox.showerror("Error", str(error))
+
+
+def crear_finestra(parent=None):
+    """Crea la finestra de selecció d'imatges."""
+    finestra = tk.Toplevel(parent) if parent else tk.Tk()
+    finestra.title("Selecciona una opció")
+    finestra.geometry("500x400")
+
+    tk.Label(
+        finestra,
+        text="Selecciona una opció",
+        font=("Arial", 16, "bold")
+    ).pack(pady=15)
+
+    marc = tk.Frame(finestra)
+    marc.pack(expand=True)
+
+    # Conservem les referències de les imatges
+    finestra.imatges = []
+
+    for index, (nom, fitxer) in enumerate(IMATGES.items()):
+        ruta = CARPETA / fitxer
+
+        try:
+            imatge = Image.open(ruta)
+            imatge.thumbnail((100, 100))
+            foto = ImageTk.PhotoImage(imatge)
+            finestra.imatges.append(foto)
+
+            boto = tk.Button(
+                marc,
+                text=nom,
+                image=foto,
+                compound="top",
+                width=110,
+                command=lambda opcio=nom: guardar_seleccio(opcio)
+            )
+
+        except (OSError, tk.TclError):
+            # Si falta la imatge, encara es pot seleccionar pel nom
+            boto = tk.Button(
+                marc,
+                text=nom,
+                width=12,
+                height=4,
+                command=lambda opcio=nom: guardar_seleccio(opcio)
+            )
+
+        boto.grid(
+            row=index // 3,
+            column=index % 3,
+            padx=8,
+            pady=8
+        )
+
+    return finestra
+
+
+if __name__ == "__main__":
+    finestra = crear_finestra()
+    finestra.mainloop()
