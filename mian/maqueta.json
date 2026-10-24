@@ -1,0 +1,9 @@
+{
+    "routes": [
+        {
+            "key": "p1",
+            "route": "/p1",
+            "button": "p1"
+        }
+    ]
+}

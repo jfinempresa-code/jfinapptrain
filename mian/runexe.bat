@@ -1,0 +1,1 @@
+python -m PyInstaller tc.py --clean
