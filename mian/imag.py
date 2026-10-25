@@ -14,7 +14,7 @@ IMATGES = {
 
 
 def carregar_imatge(nom_fitxer, mida=(110, 70)):
-    ruta = BASE_DIR / nom_fitxer
+    ruta = BASE_DIR / "images" / nom_fitxer
 
     with Image.open(ruta) as original:
         imatge = original.convert("RGBA")

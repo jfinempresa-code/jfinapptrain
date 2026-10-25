@@ -1,1 +1,1 @@
-python -m PyInstaller tc.py --clean
+python -m PyInstaller --clean --onefile --windowed --name JFinAppTrain --add-data "images:images" jfinapptrain.py
