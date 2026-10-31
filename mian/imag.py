@@ -10,6 +10,7 @@ IMATGES = {
     "Via amb Desviament a l'Esquerra": "convaes.png",
     "Via amb Desviament a la Dreta": "conva.png",
     "Via en Línia Recta ": "lina.png",
+    "Via en corba a la dreta": "corba dreta.png"
 }
 
 
