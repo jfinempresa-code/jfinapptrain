@@ -5,11 +5,11 @@ from PIL import Image, ImageTk
 BASE_DIR = Path(__file__).resolve().parent
 
 IMATGES = {
-    "Resvio": "resvio.png",
-    "Via X": "viax.png",
-    "Convaes": "convaes.png",
-    "Conva": "conva.png",
-    "Lina": "lina.png",
+    "Via en Corba a l'Esquerra": "resvio.png",
+    "Via de Creuement en X": "viax.png",
+    "Via amb Desviament a l'Esquerra": "convaes.png",
+    "Via amb Desviament a la Dreta": "conva.png",
+    "Via en Línia Recta ": "lina.png",
 }
 
 
